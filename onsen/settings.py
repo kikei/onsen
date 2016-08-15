@@ -132,7 +132,7 @@ STATICFILES_DIRS = (
 # Bootstrap3 settings
 # Refer http://django-bootstrap3.readthedocs.io/en/latest/settings.html
 BOOTSTRAP3 = {
-    'css_url': '/static/css/bootstrap.min.css',
+    'css_url': 'http://app.xaxxi.net/css/bootstrap-honoka.min.css',
     'javascript_in_head': True,
 }
 
