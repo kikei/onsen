@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2><a href="{% url 'database:index' %}">温泉を探す</a></h2>
+
+<div>
+  <h3><a href="{% url 'database:search_nearby' %}">近くの温泉を探す</h3>
+  
+  <h3>都道府県から探す</h3>
+  <div>
+    {% if entry_point_list %}
+    <ul>
+    {% for entry_point in entry_point_list %}
+      <li><a href="{% url 'database:search_location' entry_point.latitude entry_point.longitude %}">{{ entry_point.name }}</a></li>
+    {% endfor %}
+    </ul>
+  {% else %}
+    <p>No data.</p>
+    {% endif %}
+  </div>
+
+  {% comment %}
+  <h3>泉質から探す</h3>
+  {% endcomment %}
+
+  {% comment %}
+  <h3>最近の更新から探す</h3>
+  {% endcomment %}
+
+{% endblock %}

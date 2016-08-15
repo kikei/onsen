@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{{ map_widget.media }}
+
+<div id="map" data-latitude="{{ latitude }}" data-longitude="{{ longitude }}" data-zoom="13" style="width:100%;height:640px;"></div>
+
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBXaS2RvtdcwItMyAlK8BrwlDeko7SqMI0&callback=initGoogleMap" type="text/javascript"></script>
+
+{% endblock %}

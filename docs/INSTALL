@@ -1,0 +1,46 @@
+
+Dependencies
+--------------------------------------------------
+
+- Python3
+- Django
+- PostgreSQL
+- PostGIS
+- NodeJS
+- TypeScript
+- React
+- WebPack
+
+Database Setup
+--------------------------------------------------
+
+    initdb -D ~/.pgsql
+    pg_ctl -D ~/.pgsql -l logfile start
+    createdb onsen
+    
+    psql onsen
+    CREATE EXTENSION postgis;    
+
+UI Setup
+--------------------------------------------------
+
+    npm install -g typescript typings webpack
+    npm install --save react react-dom react-bootstap
+    npm install --save redux react-redux  redux-thunk
+    npm install --save object-assign
+    npm install --save-dev ts-loader source-map-loader
+    npm link typescript
+    typings install --global --save dt~react
+    typings install --global --save dt~react-dom
+    typings install --global --save dt~redux
+    typings install --global --save dt~react-redux
+    typings install --global --save dt~react-bootstrap
+    typings install --global --save dt~redux-thunk
+    typings install --global --save dt~object-assign
+    typings install --global --save dt~google.maps
+
+    cd client
+    webpack
+    
+    cp node_modules/react/dist/react.min.js ../static/js
+    cp node_modules/react-dom/dist/react-dom.min.js ../static/js 

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!-- {{ map_widget.media }} -->
+
+<script type="text/javascript">
+window.initialState = {
+  onsenName: '{{ onsen.name|default:"" }}',
+  apiGetCandidatesExists: '{% url "database:onsen_list" %}',
+  apiGetCandidatesNew: '{% url "address:inference" %}',
+  urlFormEdit: '{% url "database:onsen_form" %}'
+}
+</script>
+
+<div>
+  <form action="{% url 'database:search' %}" id="onsen_entry_form">
+    {% csrf_token %}
+  
+    <div id="example"></div>
+    {% comment %}
+    <div class="form-group">
+      <label class="control-label" for="form-onsen-name"><h2>温泉の名前を入力してください</h2></label>
+      <input type="text" name="name" id="form-onsen-name" class="form-control" value="{{ onsen.name|default:"" }}" placeholder="○○温泉" />
+    </div>
+    <button class="btn btn-primary btn-block">送信</button>
+    {% endcomment %}
+  </form>
+
+  {% load staticfiles %}
+  <script type="text/javascript" src="{% static 'js/onsen_entry_form.js' %}"></script>
+</div>
+
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBXaS2RvtdcwItMyAlK8BrwlDeko7SqMI0&callback=initStaticGoogleMap" type="text/javascript"></script>
+<script type="text/javascript">
+function initStaticGoogleMap() {
+}
+</script>
+{% endblock %}

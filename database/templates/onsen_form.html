@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!--{{ form_widget.media }} -->
+
+{% if error_messsage %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<script type="text/javascript">
+window.initialOnsenAddressState = {
+  address: '{{ onsen.address|default:"" }}'
+}
+</script>
+
+<div>
+  <form action="{% url 'database:onsen_post' %}" method="post" class="form-horizontal">
+    {% csrf_token %}
+  
+    <h2>基本情報フォーム</h2>
+    <div class="form-group">
+      <label class="col-md-2 control-label" for="form-onsen-name">温泉・施設名</label>
+      <div class="col-md-10">
+        <input type="text" name="name" id="form-onsen-name" class="form-control" value="{{ onsen.name|default:"" }}" placeholder="○○温泉" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-md-2 control-label" for="form-onsen-address">住所</label>
+      {% comment %}
+      <div class="col-md-10">
+        <input type="text" name="address" id="form-onsen-address" class="form-control" value="{{ onsen.address|default:"" }}" placeholder="○○県○○市○○町" />
+      </div>
+      {% endcomment %}
+      <div class="col-md-10" id="form-onsen-address-container" data-address="{{ onsen.address|default:"" }}" data-address-placeholder="○○県○○市○○町" />
+    </div>
+
+    <div class="form-group">
+      <label class="col-md-2 control-label" for="form-onsen-tel">TEL <small>[省略可]</small></label>
+      <div class="col-md-10">
+        <input type="text" name="tel" id="form-onsen-tel" class="form-control" value="{{ onsen.tel|default:"" }}" placeholder="xx-xxxx-xxxx" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-md-2 control-label" for="form-onsen-traffic">交通手段 <small>[省略可]</small></label>
+      <div class="col-md-10">
+        <input type="text" name="traffic" id="form-onsen-traffic" class="form-control" value="{{ onsen.traffic|default:"" }}" placeholder="○○駅から車で10分" />
+      </div>
+    </div>
+  
+    <div class="form-group">
+      <label class="col-md-2 control-label" for="form-onsen-holiday">定休日 <small>[省略可]</small></label>
+      <div class="col-md-10">
+        <textarea name="holiday" id="form-onsen-holiday" class="form-control" rows="3" placeholder="○曜日">{{ onsen.holiday|default:"" }}</textarea>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-md-2 control-label" for="form-onsen-daytrip">日帰り入浴 <small>[省略可]</small></label>
+      <div class="col-md-10">
+        <textarea name="daytrip" id="form-onsen-daytrip" class="form-control" rows="3" placeholder="10:00〜20:00">{{ onsen.daytrip|default:"" }}</textarea>
+      </div>
+    </div>
+  
+    <div class="form-group">
+      <label class="col-md-2 control-label" for="form-onsen-price">予算 <small>[省略可]</small></label>
+      <div class="col-md-10">
+        <textarea name="price" id="form-onsen-price" class="form-control" rows="3" placeholder="500円">{{ onsen.price|default:"" }}</textarea>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-md-2 control-label" for="form-onsen-character">泉質 <small>[省略可]</small></label>
+      <div class="col-md-10">
+        <input type="text" name="character" id="form-onsen-character" class="form-control" value="{{ onsen.character|default:"" }}" placeholder="単純温泉" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-md-2  control-label" for="form-onsen-amenity">アメニティ <small>[省略可</small></label>
+      <div class="col-md-10">
+        <textarea name="amenity" id="form-onsen-amenity" class="form-control" rows="3" placeholder="シャンプー有/無 リンス有/無有 ボディソープ有/無
+タオル貸出有/無">{{ onsen.amenity|default:"" }}</textarea>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-md-2 control-label" for="form-onsen-indoor">内湯 <small>[省略可]</small></label>
+      <div class="col-md-10">
+        <input type="text" name="indoor" id="form-onsen-indoor" class="form-control" value="{{ onsen.indoor|default:"" }}" placeholder="有/無" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-md-2 control-label" for="form-onsen-outdoor">露天風呂 <small>[省略可]</small></label>
+      <div class="col-md-10">
+        <input type="text" name="outdoor" id="form-onsen-outdoor" class="form-control" value="{{ onsen.outdoor|default:"" }}" placeholder="有/無"/>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-md-2 control-label" for="form-onsen-parking">駐車場 <small>[省略可]</small></label>
+      <div class="col-md-10">
+        <input type="text" name="parking" id="form-onsen-parking" class="form-control" value="{{ onsen.parking|default:"" }}" placeholder="有/無" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-md-2 control-label" for="form-onsen-stay">宿泊 <small>[省略可]</small></label>
+      <div class="col-md-10">
+        <textarea name="stay" id="form-onsen-stay" class="form-control" rows="3" placeholder="可/不可">{{ onsen.stay|default:"" }}</textarea>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-md-2 control-label" id="form-onsen-website">ホームページ <small>[省略可]</small></label>
+      <div class="col-md-10">
+        <input type="text" name="website" id="form-onsen-website" class="form-control" value="{{ onsen.website|default:"" }}" placeholder="http://example.com" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-md-2 control-label" id="form-onsen-note">備考 <small>[省略可]</small></label>
+      <div class="col-md-10">
+        <textarea name="note" id="form-onsen-note" class="form-control" rows="3" placeholder="">{{ onsen.note|default:"" }}</textarea>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-md-offset-2 col-md-10">
+        <button type="submit" class="btn btn-default" name="submit">送信</button>
+      </div>
+    </div>
+
+    {% if onsen.id %}<input type="hidden" name="id" value="{{ onsen.id }}" />{% endif %}
+    <input type="hidden" name="latitude" value="{{ onsen.latitude|default:"" }}" />
+    <input type="hidden" name="longitude" value="{{ onsen.longitude|default:"" }}" />
+  </form>
+
+{% load staticfiles %}
+<script type="text/javascript" src="{% static 'js/onsen_edit_form.js' %}"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBXaS2RvtdcwItMyAlK8BrwlDeko7SqMI0&callback=initStaticGoogleMap" type="text/javascript"></script>
+<script type="text/javascript">
+function initStaticGoogleMap() {
+  console.log('init static google map');
+}
+</script>
+{% endblock %}

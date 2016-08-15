@@ -1,0 +1,24 @@
+{
+  "name": "react-typescript-guide",
+  "version": "0.0.0",
+  "description": "try https://www.typescriptlang.org/docs/handbook/react-&-webpack.html",
+  "main": "./dist/bundle.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "kikei",
+  "license": "MIT",
+  "dependencies": {
+    "react-dom": "~15.3.0",
+    "react": "~15.3.0",
+    "react-redux": "~4.4.5",
+    "redux": "~3.5.2",
+    "react-bootstrap": "~0.30.2",
+    "redux-thunk": "~2.1.0",
+    "object-assign": "~4.1.0"
+  },
+  "devDependencies": {
+    "source-map-loader": "~0.1.5",
+    "ts-loader": "~0.8.2"
+  }
+}

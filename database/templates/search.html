@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{{ search_widget.media }}
+
+<h2>{% block search_title %}温泉の検索結果{% endblock %}</h2>
+
+<p>{{ search.start }}〜{{ search.end }}件を表示 / 全部で{{ search.count }}件</p>
+
+<div>
+  {% if onsen_list %}
+  {% for onsen in onsen_list %}
+  <div class="row">
+    <h3><a href="{% url 'database:onsen_detail' onsen.id %}">{{ onsen.name }}</a></h3>
+    <p>{{ onsen.address }}</p>
+    <p>泉質: {{ onsen.character }}</p>
+    <p>日帰り入浴: {{ onsen.daytrip|linebreaksbr }}</p>
+    <p>定休日: {{ onsen.holiday|linebreaksbr }}</p>
+    <p>設備: {{ onsen.amenity }}</p>
+  </div>
+  {% endfor %}
+  {% else %}
+  該当の温泉は見つかりませんでした。
+  {% endif %}
+</div>
+
+{% endblock %}

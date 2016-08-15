@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{{ map_widget.media }}
+
+<h2><a href="{% url 'database:onsen_detail' onsen.id %}">{{ onsen.name }}</a></h2>
+
+<div>
+  {% comment %}
+  <div class="row" style="display:flex">
+    <div class="col-md-11" style="align-self:flex-start">
+      <h3>{{ onsen.name }}の写真</h3>
+    </div>
+    <div class="col-md-2 text-right" style="align-self:flex-end">
+      <p><a href="{% url 'database:onsen_form' %}?id={{ onsen.id }}">写真を投稿する</a></p>
+    </div>
+  </div>
+  {% endcomment %}
+
+  {% comment %}
+  <div class="row" style="display:flex">
+    <div class="col-md-11" style="align-self:flex-start">
+      <h3>{{ onsen.name }}の口コミ</h3>
+    </div>
+    <div class="col-md-2 text-right" style="align-self:flex-end">
+      <p><a href="{% url 'database:onsen_form' %}?id={{ onsen.id }}">口コミを投稿する</a></p>
+    </div>
+  </div>
+  {% endcomment %}
+  
+  <div class="row" style="display:flex">
+    <div class="col-md-11" style="align-self:flex-start">
+      <h3>温泉基本情報</h3>
+    </div>
+    <div class="col-md-2 text-right" style="align-self:flex-end">
+      <p><a href="{% url 'database:onsen_form' %}?id={{ onsen.id }}">基本情報を編集する</a></p>
+    </div>
+  </div>
+
+  <table class="table table-striped table-hover table-condensed">
+    <tbody>
+      <tr>
+	<th class="col-md-2">店名</th>
+	<td class="col-md-10">{{ onsen.name }}</td>
+      </tr>
+      <tr>
+	<th>TEL</th>
+	<td>{{ onsen.tel|default:"未登録" }}</td>
+      <tr>
+	<th>住所</th>
+	<td>
+	  {{ onsen.address }}
+	  <div class="map-container" style="border:solid 1px #00f;position:relative;">
+	    <a href="{% url 'database:map' onsen.latitude onsen.longitude %}" >
+	      <div id="map" data-latitude="{{ onsen.latitude }}" data-longitude="{{ onsen.longitude }}" data-zoom="14" style="height:300px"></div>
+	      <p style="position:absolute;right:0px;top:0px;background-color:rgba(128,128,128,50);color:#fff">
+		周辺の地図を見る
+	      </p>
+	    </a>
+	  </div>
+	</td>
+      </tr>
+      <tr>
+	<th>交通手段</th>
+	<td>{{ onsen.traffic|linebreaks }}
+      </tr>
+      <tr>
+	<th>定休日</th>
+	<td>{{ onsen.holiday|linebreaks }}</td>
+      </tr>
+      <tr>
+	<th>日帰り入浴</th>
+	<td>{{ onsen.daytrip|linebreaks }}</td>
+      </tr>
+      <tr>
+	<th>予算</th>
+	<td>{{ onsen.price|linebreaks }}</td>
+      </tr>
+      <tr>
+	<th>泉質</th>
+	<td>{{ onsen.character }}</td>
+      </tr>
+      <tr>
+	<th>アメニティ</th>
+	<td>{{ onsen.amenity|linebreaks }}</td>
+      </tr>
+      <tr>
+	<th>内湯</th>
+	<td>{{ onsen.indoor }}</td>
+      </tr>
+      <tr>
+	<th>露天風呂</th>
+	<td>{{ onsen.outdoor }}</td>
+      </tr>
+      <tr>
+	<th>駐車場</th>
+	<td>{{ onsen.parking }}</td>
+      </tr>
+      <tr>
+	<th>宿泊</th>
+	<td>{{ onsen.stay }}</td>
+      </tr>
+      <tr>
+	<th>ホームページ</th>
+	<td><a href="{{ onsen.website }}">{{ onsen.website }}</a></td>
+      </tr>
+      <tr>
+	<th>備考</th>
+	<td>{{ onsen.note|linebreaks }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBXaS2RvtdcwItMyAlK8BrwlDeko7SqMI0&callback=initStaticGoogleMap" type="text/javascript"></script>
+
+{% endblock %}
