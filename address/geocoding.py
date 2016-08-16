@@ -1,9 +1,11 @@
+import json
 import logging
-import requests
+import urllib.parse
+import urllib.request
 
 from onsen import settings
 
-def normalize_decimal(t):
+def normalize_address(t):
     t = t.replace(u"０", "0")
     t = t.replace(u"１", "1")
     t = t.replace(u"２", "2")
@@ -28,19 +30,17 @@ def latlng_to_address(latitude, longitude, logger=None):
     if logger is None:
         logger = logging.getLogger(__name__)
 
-    BASEURL = 'https://maps.googleapis.com/maps/api/geocode/json'
+    BASEURL = 'https://maps.googleapis.com/maps/api/geocode/json?{}'
 
-    params = {
+    query = urllib.parse.urlencode({
         'latlng': "{},{}".format(latitude, longitude),
         'key': settings.GOOGLE_GEOCODING_KEY,
         'language': 'ja'
-    }
-    headers = {
-        'User-Agent': settings.API_USER_AGENT
-    }
-    response = requests.get(BASEURL, params=params, headers=headers)
-    
-    result = response.json()
+    })
+    req = urllib.request.Request(BASEURL.format(query))
+    f = urllib.request.urlopen(req)
+    content = f.read().decode('utf-8')
+    result = json.loads(content)
     address_ = result['results'][0]['formatted_address']
 
     # Skip contry name and postal code.
@@ -60,20 +60,17 @@ def address_to_latlng(address, logger=None):
     if logger is None:
         logger = logging.getLogger(__name__)
 
-    BASEURL = 'https://maps.googleapis.com/maps/api/geocode/json'
+    BASEURL = 'https://maps.googleapis.com/maps/api/geocode/json?{}'
     
-    params = {
+    query = urllib.parse.urlencode({
         'address': address,
         'key': settings.GOOGLE_GEOCODING_KEY,
         'language': 'ja'
-    }
-    headers = {
-        'User-Agent': settings.API_USER_AGENT
-    }
-    
-    response = requests.get(BASEURL, params=params, headers=headers)
-    
-    result = response.json()
+    })
+    req = urllib.request.Request(BASEURL.format(query))
+    f = urllib.request.urlopen(req)
+    content = f.read().decode('utf-8')
+    result = json.loads(content)
     if len(result['results']) == 0:
         logger.error('results empty result={}'.format(result))
         return None
