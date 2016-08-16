@@ -6,18 +6,20 @@ import urllib.request
 from onsen import settings
 
 def normalize_address(t):
-    t = t.replace(u"０", "0")
-    t = t.replace(u"１", "1")
-    t = t.replace(u"２", "2")
-    t = t.replace(u"３", "3")
-    t = t.replace(u"４", "4")
-    t = t.replace(u"５", "5")
-    t = t.replace(u"６", "6")
-    t = t.replace(u"７", "7")
-    t = t.replace(u"８", "8")
-    t = t.replace(u"９", "9")
-    t = t.replace(u"ー", "-")
-    t = t.replace(u"　", " ")
+    t = t.replace("０", "0")
+    t = t.replace("１", "1")
+    t = t.replace("２", "2")
+    t = t.replace("３", "3")
+    t = t.replace("４", "4")
+    t = t.replace("５", "5")
+    t = t.replace("６", "6")
+    t = t.replace("７", "7")
+    t = t.replace("８", "8")
+    t = t.replace("９", "9")
+    t = t.replace("ー", "-")
+    t = t.replace("　", " ")
+    t = t.replace("丁目", "-")
+    t = t.replace("番地", "-")
     return t
 
 def latlng_to_address(latitude, longitude, logger=None):
@@ -46,7 +48,7 @@ def latlng_to_address(latitude, longitude, logger=None):
     # Skip contry name and postal code.
     address = ' '.join(address_.split(' ')[2:])
     
-    address = normalize_decimal(address)
+    address = normalize_address(address)
     
     return address
 
