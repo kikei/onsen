@@ -151,7 +151,7 @@ function success_list(list) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-  url = 'http://127.0.0.1:8000/api/onsen';
+  url = '/api/onsen';
 
   fetch(url).then(response => response.json()).then(success_list);
   console.log('OK');
