@@ -70,7 +70,7 @@ extends React.Component<OnsenEntryProps, any> {
         const data: any = {address: onsen.address}
         $.ajax({
           // url: this.props.state.apiGetCandidatesNew,
-          url: 'http://127.0.0.1:8000/address/tolatlng',
+          url: '/address/tolatlng',
           data: data, dataType: 'json',
           success: (msg: any) => {
             console.log(msg);

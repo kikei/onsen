@@ -41,7 +41,7 @@ extends React.Component<OnsenAddressProps, any> {
         const data: {address: string} = {address: address}
         $.ajax({
           // url: this.props.state.apiGetCandidatesNew,
-          url: 'http://127.0.0.1:8000/address/tolatlng',
+          url: '/address/tolatlng',
           data: data, dataType: 'json',
           success: (msg: any) => {
             console.log(msg);
@@ -103,7 +103,7 @@ extends React.Component<OnsenAddressProps, any> {
         {latitude: latitude, longitude: longitude}
       $.ajax({
         // url: this.props.state.apiGetCandidatesNew,
-        url: 'http://127.0.0.1:8000/address/bylatlng',
+        url: '/address/bylatlng',
         data: data, dataType: 'json',
         success: (msg: string) => {
           console.log(msg);
