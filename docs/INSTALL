@@ -4,25 +4,79 @@ Dependencies
 
 - Python3
 - Django
+- Bootstrap3
 - PostgreSQL
 - PostGIS
+- React
+- MeCab
+
+INSTALL
+--------------------------------------------------
+
+### MeCab Setup
+
+This application using MeCab, it's a morphological analyzer library for japanese.
+You can install this by following [MeCab offcial instruction](http://taku910.github.io/mecab/#install).
+
+You may also need to update a `LD_LIBRARY_PATH` enviroment variable like
+
+    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
+
+to tell Python where libmecab.so locates.
+
+### Python Setup
+
+    pip3 install Django
+    pip3 install django-bootstrap3
+    pip3 install psycopg2
+    pip3 install chardet
+    pip3 install lxml
+    pip3 install mecab-python3
+
+### Get source code
+
+Clone from GitHub.
+
+    git clone https://github.com/kikei/onsen.git
+
+### Database Setup
+
+This application depends on PostgreSQL and PostGIS.
+
+At first, create user and database:
+
+    createuser onsen
+    createdb onsen -E UTF8 -T template0
+
+Then install PostGIS extension into the database.
+Run these command as database superuser.
+
+    psql onsen
+    CREATE EXTENSION postgis;
+
+If `onsen` is not superuser, change owner of postgis table as:
+
+    ALTER TABLE spatial_ref_sys OWNER TO onsen;
+
+### Run server
+
+Before start a server, you need to migrate database.
+
+    cd onsen
+    python3 manage.py migrate
+
+    python3 manage.py makemigrations database
+    python3 manage.py makemigrations address
+    python3 manage.py migrate
+
+
+Build JavaScript 
+--------------------------------------------------
+Scripts are written in TypeScript, and built with WebPack.
+You have to install extra dependencies:
 - NodeJS
 - TypeScript
-- React
 - WebPack
-
-Database Setup
---------------------------------------------------
-
-    initdb -D ~/.pgsql
-    pg_ctl -D ~/.pgsql -l logfile start
-    createdb onsen
-    
-    psql onsen
-    CREATE EXTENSION postgis;    
-
-UI Setup
---------------------------------------------------
 
     npm install -g typescript typings webpack
     npm install --save react react-dom react-bootstap
@@ -41,6 +95,3 @@ UI Setup
 
     cd client
     webpack
-    
-    cp node_modules/react/dist/react.min.js ../static/js
-    cp node_modules/react-dom/dist/react-dom.min.js ../static/js 
