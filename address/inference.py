@@ -211,8 +211,7 @@ class Address:
 def is_noun(w):
     return w.partOfSpeech == '名詞'
 
-def morphological_analyze(sentence):
-    tagger = MeCab.Tagger('')
+def morphological_analyze(tagger, sentence):
     node = tagger.parse(sentence)
     for node in node.split('\n'):
         cols = node.split('\t')
@@ -307,22 +306,12 @@ def build_address(areas):
             if area is None: break
             address.append_detail(area)
             level = 4
-    return address
-            
-def extract_address(address_list, text):
-    """
-    extract address from text on natural language
-    """
-    text  = pre_normalize(text)
-    words = morphological_analyze(text)
-    areas = syntax_analyze(words)
-    addr  = build_address(areas)
-    addr.complete(address_list)
-    return addr
+    return address            
 
 def test_extract(text):
+    tagger = MeCab.Tagger('')
     text  = pre_normalize(text)
-    words = morphological_analyze(text)
+    words = morphological_analyze(tagger, text)
     areas = syntax_analyze(words)
     addr  = build_address(areas)
     return addr
@@ -355,6 +344,7 @@ class Inference:
         self.bing_account_key = bing_account_key
         self.excludelist = excludelist
         self.address_list_csv = address_list_csv
+        self.tagger = MeCab.Tagger('')
     
     def address_of(self, name):
         urls = self.search_bing(name)
@@ -483,10 +473,21 @@ class Inference:
             if len(t) < 4: continue
             if 300 < len(t): continue
             # run extractor
-            addr = extract_address(address_list, t)
+            addr = self.extract_address(address_list, t)
             if len(str(addr)) > 0:
                 self.logger.debug('addr={}, ok={}'.format(addr, addr.ok()))
             if addr.ok() and addr.get_address() not in addrs:
                 addrs.append(addr.get_address())
                 result.append(addr)
         return result
+
+    def extract_address(self, address_list, text):
+        """
+        extract address from text on natural language
+        """
+        text  = pre_normalize(text)
+        words = morphological_analyze(self.tagger, text)
+        areas = syntax_analyze(words)
+        addr  = build_address(areas)
+        addr.complete(address_list)
+        return addr
