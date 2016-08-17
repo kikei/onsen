@@ -83,7 +83,7 @@ DATABASES = {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'HOST': 'localhost',
         'NAME': 'onsen',
-        'USER': 'fujii',
+        'USER': 'onsen',
     }
 }
 
