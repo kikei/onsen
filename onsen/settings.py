@@ -203,7 +203,5 @@ ADDRESS_EXCLUDE_LIST = [
   "http://www.jalan.net/onsen/"
 ]
 
-# Private data
-GOOGLE_GEOCODING_KEY = os.environ['ONSEN_GOOGLE_GEOCODING_KEY']
-BING_CLIENT_ID = os.environ['ONSEN_BING_CLIENT_ID']
-BING_ACCOUNT_KEY = os.environ['ONSEN_BING_ACCOUNT_KEY']
+# Write private constants in local_settings.
+from onsen.local_settings import *

@@ -54,13 +54,11 @@ Run these command as database superuser.
     psql onsen
     CREATE EXTENSION postgis;
 
-If `onsen` is not superuser, change owner of postgis table as:
+Only if `onsen` is not superuser, change owner of postgis table as:
 
     ALTER TABLE spatial_ref_sys OWNER TO onsen;
 
-### Run server
-
-Before start a server, you need to migrate database.
+Migrate database.
 
     cd onsen
     python3 manage.py migrate
@@ -68,6 +66,20 @@ Before start a server, you need to migrate database.
     python3 manage.py makemigrations database
     python3 manage.py makemigrations address
     python3 manage.py migrate
+
+### Local settings
+
+Setup your private keys.
+
+    cat <<EOF > onsen/local_settings.py
+    GOOGLE_GEOCODING_KEY = 'Your Google Geocoding API Key'
+    BING_CLIENT_ID = 'Your Bing Client ID'
+    BING_ACCOUNT_KEY = 'Your Bing Account Key'
+    EOF
+
+### Run server
+
+    python3 manage.py runserver
 
 
 Build JavaScript 
